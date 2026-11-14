@@ -10,37 +10,34 @@ import {
   useRef,
   useState,
 } from "react";
-import type { ComponentRef, ReactNode } from "react";
+import type { ReactNode } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { OrbitControls, useTexture } from "@react-three/drei";
+import { useTexture } from "@react-three/drei";
 import {
   ACESFilmicToneMapping,
   BufferAttribute,
   BufferGeometry,
   DoubleSide,
   Group,
-  MathUtils,
   PCFSoftShadowMap,
-  PerspectiveCamera,
   RingGeometry,
   SRGBColorSpace,
-  Vector3,
 } from "three";
 import type { BodyId } from "@/data/bodies";
 import { bodies, bodyOrder } from "@/data/bodies";
 import {
   DEFAULT_CAMERA,
-  fitRadiusDistance,
   RING_INNER_RADIUS,
   RING_OUTER_RADIUS,
   sceneBodies,
-  saturnOverviewDistance,
 } from "@/lib/scene-config";
 
-export type CameraCommand = {
-  type: "zoom-in" | "zoom-out" | "reset" | "top" | "angle";
-  nonce: number;
-};
+import { CameraRig, type CameraCommand, type CameraStatus } from "./CameraRig";
+import {
+  SphereDetailProvider,
+  useSphereLod,
+} from "@/components/scene-detail/sphere-lod";
+export type { CameraCommand, CameraStatus } from "./CameraRig";
 
 export interface SceneCanvasProps {
   selected: BodyId;
@@ -50,6 +47,8 @@ export interface SceneCanvasProps {
   command: CameraCommand | null;
   onReady?: () => void;
   onError?: () => void;
+  inputEnabled?: boolean;
+  onCameraStatus?: (status: CameraStatus) => void;
 }
 
 function Fallback() {
@@ -58,7 +57,9 @@ function Fallback() {
       <div className="fallback-planet" aria-hidden="true" />
       <div className="fallback-message">
         <p>3D view unavailable</p>
-        <span>You can still explore every object and its facts below.</span>
+        <span>
+          Use the object selector and information panels to keep exploring.
+        </span>
       </div>
     </div>
   );
@@ -143,6 +144,7 @@ function Saturn({
     },
   );
   const planet = useRef<Group>(null);
+  const { meshRef, geometry: sphereGeometry } = useSphereLod("saturn", 2);
   const { invalidate } = useThree();
   const geometry = useMemo(() => {
     const result = new RingGeometry(
@@ -176,7 +178,9 @@ function Saturn({
     <group rotation={[0.08, 0, -0.31]}>
       <group ref={planet}>
         <mesh
-          scale={[1, 0.902, 1]}
+          ref={meshRef}
+          geometry={sphereGeometry}
+          scale={[2, 1.804, 2]}
           castShadow
           receiveShadow
           onClick={(event) => {
@@ -185,7 +189,6 @@ function Saturn({
             onSelect("saturn");
           }}
         >
-          <sphereGeometry args={[2, 96, 64]} />
           <meshStandardMaterial map={surface} roughness={0.95} metalness={0} />
         </mesh>
       </group>
@@ -226,8 +229,12 @@ function Moon({
     loaded.anisotropy = 4;
   });
   const body = sceneBodies[id];
+  const { meshRef, geometry } = useSphereLod(id, body.radius);
   return (
     <mesh
+      ref={meshRef}
+      geometry={geometry}
+      scale={body.radius}
       position={body.position}
       castShadow
       receiveShadow
@@ -237,200 +244,8 @@ function Moon({
         onSelect(id);
       }}
     >
-      <sphereGeometry args={[body.radius, 48, 32]} />
       <meshStandardMaterial map={texture} roughness={1} metalness={0} />
     </mesh>
-  );
-}
-
-function CameraRig({
-  selected,
-  command,
-  reducedMotion = false,
-}: Pick<SceneCanvasProps, "selected" | "command" | "reducedMotion">) {
-  const controls = useRef<ComponentRef<typeof OrbitControls>>(null);
-  const { camera, invalidate, gl, size } = useThree();
-  const aspect = size.width / size.height;
-  const verticalFov = camera instanceof PerspectiveCamera ? camera.fov : 40;
-  const overviewDistance = saturnOverviewDistance(verticalFov, aspect);
-  const destination = useRef(new Vector3(...DEFAULT_CAMERA));
-  const targetDestination = useRef(new Vector3());
-  const transitioning = useRef(false);
-  const lastCommand = useRef<number | null>(null);
-  const minDistance =
-    selected === "saturn" ? 5.4 : sceneBodies[selected].radius * 2.8;
-  const maxDistance = selected === "saturn" ? 23 : 8;
-
-  useEffect(() => {
-    const body = sceneBodies[selected];
-    targetDestination.current.set(...body.position);
-    if (selected === "saturn")
-      destination.current
-        .set(...DEFAULT_CAMERA)
-        .normalize()
-        .multiplyScalar(overviewDistance);
-    else
-      destination.current
-        .set(...body.position)
-        .add(new Vector3(0.3, body.radius * 1.2, body.radius * 6.5));
-    transitioning.current = true;
-    if (controls.current) {
-      controls.current.minDistance = 0.05;
-      controls.current.maxDistance = 30;
-    }
-    invalidate();
-  }, [selected, overviewDistance, invalidate]);
-
-  useEffect(() => {
-    if (!command || command.nonce === lastCommand.current || !controls.current)
-      return;
-    lastCommand.current = command.nonce;
-    const orbit = controls.current;
-    if (command.type === "reset") {
-      targetDestination.current.set(...sceneBodies[selected].position);
-      if (selected === "saturn")
-        destination.current
-          .set(...DEFAULT_CAMERA)
-          .normalize()
-          .multiplyScalar(overviewDistance);
-      else
-        destination.current
-          .set(...sceneBodies[selected].position)
-          .add(
-            new Vector3(
-              0.3,
-              sceneBodies[selected].radius * 1.2,
-              sceneBodies[selected].radius * 6.5,
-            ),
-          );
-    } else if (command.type === "top" || command.type === "angle") {
-      targetDestination.current.set(...sceneBodies[selected].position);
-      const viewRadius =
-        selected === "saturn" && command.type === "top"
-          ? RING_OUTER_RADIUS
-          : sceneBodies[selected].radius;
-      const fitDistance =
-        camera instanceof PerspectiveCamera
-          ? fitRadiusDistance(viewRadius, camera.fov, camera.aspect)
-          : minDistance;
-      // Presets always provide a complete subject view, even after a close zoom.
-      const distance = MathUtils.clamp(
-        Math.max(camera.position.distanceTo(orbit.target), fitDistance),
-        minDistance,
-        maxDistance,
-      );
-      const direction =
-        command.type === "top"
-          ? new Vector3(0, 1, 0.05)
-          : new Vector3(0, 0.31, 1);
-      destination.current
-        .copy(targetDestination.current)
-        .add(direction.normalize().multiplyScalar(distance));
-    } else {
-      targetDestination.current.copy(orbit.target);
-      const offset = camera.position.clone().sub(orbit.target);
-      const distance = MathUtils.clamp(
-        offset.length() * (command.type === "zoom-in" ? 0.78 : 1.28),
-        minDistance,
-        maxDistance,
-      );
-      destination.current
-        .copy(orbit.target)
-        .add(offset.normalize().multiplyScalar(distance));
-    }
-    transitioning.current = true;
-    orbit.minDistance = 0.05;
-    orbit.maxDistance = 30;
-    invalidate();
-  }, [
-    command,
-    camera,
-    selected,
-    overviewDistance,
-    minDistance,
-    maxDistance,
-    invalidate,
-  ]);
-
-  useEffect(() => {
-    const resume = () => invalidate();
-    document.addEventListener("visibilitychange", resume);
-    return () => document.removeEventListener("visibilitychange", resume);
-  }, [invalidate]);
-
-  useFrame((_, delta) => {
-    const orbit = controls.current;
-    if (!orbit) return;
-    if (transitioning.current) {
-      const amount = reducedMotion
-        ? 1
-        : 1 - Math.exp(-Math.min(delta, 0.1) * 6);
-      camera.position.lerp(destination.current, amount);
-      orbit.target.lerp(targetDestination.current, amount);
-      orbit.update();
-      const done =
-        camera.position.distanceTo(destination.current) < 0.001 &&
-        orbit.target.distanceTo(targetDestination.current) < 0.001;
-      if (done) {
-        transitioning.current = false;
-        orbit.minDistance = minDistance;
-        orbit.maxDistance = maxDistance;
-      } else invalidate();
-    }
-    // Small read-only telemetry is useful to browser tests without exposing Three internals.
-    gl.domElement.setAttribute(
-      "data-camera-settled",
-      String(!transitioning.current),
-    );
-    gl.domElement.setAttribute(
-      "data-camera-distance",
-      camera.position.distanceTo(orbit.target).toFixed(3),
-    );
-    gl.domElement.setAttribute(
-      "data-camera-polar",
-      orbit.getPolarAngle().toFixed(3),
-    );
-    gl.domElement.setAttribute("data-selected", selected);
-    gl.domElement.setAttribute(
-      "data-render-calls",
-      String(gl.info.render.calls),
-    );
-    gl.domElement.setAttribute(
-      "data-triangles",
-      String(gl.info.render.triangles),
-    );
-    gl.domElement.setAttribute(
-      "data-geometries",
-      String(gl.info.memory.geometries),
-    );
-    gl.domElement.setAttribute(
-      "data-textures",
-      String(gl.info.memory.textures),
-    );
-  });
-
-  return (
-    <OrbitControls
-      ref={controls}
-      makeDefault
-      enablePan={false}
-      enableDamping={!reducedMotion}
-      dampingFactor={0.09}
-      minDistance={minDistance}
-      maxDistance={maxDistance}
-      minPolarAngle={0.08}
-      maxPolarAngle={Math.PI - 0.08}
-      rotateSpeed={0.55}
-      zoomSpeed={0.65}
-      onStart={() => {
-        transitioning.current = false;
-        if (controls.current) {
-          controls.current.minDistance = minDistance;
-          controls.current.maxDistance = maxDistance;
-        }
-      }}
-      onChange={() => invalidate()}
-    />
   );
 }
 
@@ -469,16 +284,20 @@ function Scene({ onReady, onError, ...props }: SceneCanvasProps) {
         shadow-normalBias={0.015}
       />
       <Stars />
-      <Saturn onSelect={props.onSelect} motion={props.motion} />
-      {bodyOrder
-        .filter((id): id is Exclude<BodyId, "saturn"> => id !== "saturn")
-        .map((id) => (
-          <Moon key={id} id={id} onSelect={props.onSelect} />
-        ))}
+      <SphereDetailProvider>
+        <Saturn onSelect={props.onSelect} motion={props.motion} />
+        {bodyOrder
+          .filter((id): id is Exclude<BodyId, "saturn"> => id !== "saturn")
+          .map((id) => (
+            <Moon key={id} id={id} onSelect={props.onSelect} />
+          ))}
+      </SphereDetailProvider>
       <CameraRig
         selected={props.selected}
         command={props.command}
         reducedMotion={props.reducedMotion}
+        inputEnabled={props.inputEnabled}
+        onCameraStatus={props.onCameraStatus}
       />
     </>
   );

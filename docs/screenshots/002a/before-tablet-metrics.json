@@ -1,0 +1,37 @@
+[
+  {
+    "name": "tablet",
+    "metrics": {
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "scroll": {
+        "width": 1024,
+        "height": 1797
+      },
+      "canvas": {
+        "engine": "three.js r182",
+        "cameraSettled": "true",
+        "cameraDistance": "12.397",
+        "cameraPolar": "1.259",
+        "selected": "saturn",
+        "renderCalls": "7",
+        "triangles": "22048",
+        "geometries": "6",
+        "textures": "8"
+      },
+      "canvasBounds": {
+        "x": 245.75,
+        "y": 80,
+        "width": 849.921875,
+        "height": 610,
+        "top": 80,
+        "right": 1095.671875,
+        "bottom": 690,
+        "left": 245.75
+      }
+    },
+    "errors": []
+  }
+]

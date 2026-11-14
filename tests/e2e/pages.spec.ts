@@ -2,7 +2,6 @@ import { expect, test } from "@playwright/test";
 
 test("export serves prefixed bundles, maps and fonts without root-relative requests", async ({
   page,
-  request,
 }, info) => {
   const errors: string[] = [];
   const assets: string[] = [];
@@ -40,17 +39,27 @@ test("export serves prefixed bundles, maps and fonts without root-relative reque
     "enceladus.jpg",
     "rhea.jpg",
   ]) {
-    const response = await request.get(`textures/${file}`);
-    expect(response.status()).toBe(200);
-    expect(response.headers()["content-type"]).toMatch(/^image\//);
+    const response = await page.evaluate(async (name) => {
+      const result = await fetch(`textures/${name}`);
+      return {
+        status: result.status,
+        type: result.headers.get("content-type"),
+      };
+    }, file);
+    expect(response.status).toBe(200);
+    expect(response.type).toMatch(/^image\//);
   }
-  for (const kind of [/\.js(?:\?|$)/, /\.css(?:\?|$)/, /\.(?:woff2|ttf)(?:\?|$)/])
+  for (const kind of [
+    /\.js(?:\?|$)/,
+    /\.css(?:\?|$)/,
+    /\.(?:woff2|ttf)(?:\?|$)/,
+  ])
     expect(assets.some((url) => kind.test(url))).toBe(true);
   for (const url of assets)
     expect(new URL(url).pathname).toMatch(/^\/aether-universe\//);
   expect(new URL(page.url()).pathname).toBe(mount);
   await page.screenshot({
-    path: `docs/screenshots/pages-${info.project.name}.png`,
+    path: `docs/screenshots/002a/after-assets-${info.project.name}.png`,
   });
   expect(errors).toEqual([]);
 });
