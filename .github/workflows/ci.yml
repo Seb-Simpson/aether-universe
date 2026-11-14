@@ -1,7 +1,7 @@
 name: Verify AETHER
 on:
   push:
-    branches: [main, codex/aether-001-foundation]
+    branches: [main, codex/aether-001-foundation, codex/aether-001b-pages]
   pull_request:
 permissions:
   contents: read
@@ -27,7 +27,7 @@ jobs:
           AETHER_SERVER_PID=$!
           trap 'kill "$AETHER_SERVER_PID" 2>/dev/null || true' EXIT
           for attempt in {1..30}; do
-            if curl -fsS http://127.0.0.1:3000/ > /dev/null; then break; fi
+            if curl -fsS http://127.0.0.1:3000/aether-universe/ > /dev/null; then break; fi
             sleep 1
           done
           node scripts/responsive-smoke.mjs

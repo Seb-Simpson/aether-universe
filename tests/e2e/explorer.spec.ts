@@ -1,7 +1,7 @@
 import { expect, test, type Page } from "@playwright/test";
 
 async function loadExplorer(page: Page) {
-  await page.goto("/");
+  await page.goto("./");
   await expect(
     page.getByRole("heading", { name: /^Saturn\.?$/ }),
   ).toBeVisible();
@@ -234,7 +234,7 @@ test("keeps sourced information usable when WebGL is unavailable", async ({
       return Reflect.apply(original, this, [type, ...args]);
     } as typeof original;
   });
-  await page.goto("/");
+  await page.goto("./");
   await expect(page.getByText(/3D view unavailable/i)).toBeVisible();
   await page
     .getByRole("button", { name: "Select Enceladus", exact: true })

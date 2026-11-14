@@ -32,7 +32,7 @@ for (const config of [
     if (msg.type() === "error") errors.push(msg.text());
   });
   const start = Date.now();
-  await page.goto("http://127.0.0.1:3000/");
+  await page.goto(process.env.AETHER_TEST_URL ?? "http://127.0.0.1:3000/aether-universe/");
   const canvas = page.locator("canvas");
   await page.getByTestId("scene-viewport").waitFor({ state: "visible" });
   await page.waitForFunction(

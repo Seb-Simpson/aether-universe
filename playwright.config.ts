@@ -8,7 +8,8 @@ export default defineConfig({
   expect: { timeout: 15_000 },
   reporter: [["list"], ["html", { open: "never" }]],
   use: {
-    baseURL: "http://127.0.0.1:3000",
+    baseURL:
+      process.env.AETHER_TEST_URL ?? "http://127.0.0.1:3000/aether-universe/",
     trace: "retain-on-failure",
     screenshot: "only-on-failure",
     launchOptions: {
@@ -37,10 +38,12 @@ export default defineConfig({
       },
     },
   ],
-  webServer: {
-    command: "npm run start",
-    url: "http://127.0.0.1:3000",
-    reuseExistingServer: !process.env.CI,
-    timeout: 120_000,
-  },
+  webServer: process.env.AETHER_TEST_URL
+    ? undefined
+    : {
+        command: "npm run start",
+        url: "http://127.0.0.1:3000/aether-universe/",
+        reuseExistingServer: false,
+        timeout: 120_000,
+      },
 });
