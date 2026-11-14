@@ -1,3 +1,4 @@
+import { assetPath } from "@/lib/paths";
 /** Editorial astronomy data. Rounded values retain their source's precision.
  * Scene dimensions and positions deliberately live outside this module.
  */
@@ -74,7 +75,7 @@ export const bodies: Record<BodyId, CelestialBody> = {
         url: "https://science.nasa.gov/saturn/facts/",
       },
     ],
-    texture: "/textures/saturn.jpg",
+    texture: assetPath("/textures/saturn.jpg"),
     accent: "#d9bc8c",
   },
   titan: {
@@ -118,7 +119,7 @@ export const bodies: Record<BodyId, CelestialBody> = {
         url: "https://science.nasa.gov/saturn/moons/titan/facts/",
       },
     ],
-    texture: "/textures/titan.jpg",
+    texture: assetPath("/textures/titan.jpg"),
     accent: "#d9a45e",
   },
   enceladus: {
@@ -162,7 +163,7 @@ export const bodies: Record<BodyId, CelestialBody> = {
         url: "https://science.nasa.gov/saturn/moons/enceladus/",
       },
     ],
-    texture: "/textures/enceladus.jpg",
+    texture: assetPath("/textures/enceladus.jpg"),
     accent: "#cbd9dc",
   },
   rhea: {
@@ -198,7 +199,7 @@ export const bodies: Record<BodyId, CelestialBody> = {
         url: "https://science.nasa.gov/saturn/moons/rhea/",
       },
     ],
-    texture: "/textures/rhea.jpg",
+    texture: assetPath("/textures/rhea.jpg"),
     accent: "#c9c6be",
   },
 };

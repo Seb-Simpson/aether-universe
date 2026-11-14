@@ -5,12 +5,13 @@
   "scripts": {
     "dev": "next dev --hostname 0.0.0.0",
     "build": "next build",
-    "start": "next start --hostname 0.0.0.0",
+    "start": "node scripts/serve-export.mjs",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "test:pages": "playwright test tests/e2e/pages.spec.ts"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",

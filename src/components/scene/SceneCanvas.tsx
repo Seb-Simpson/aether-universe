@@ -1,5 +1,6 @@
 "use client";
 
+import { assetPath } from "@/lib/paths";
 import {
   Component,
   Suspense,
@@ -133,7 +134,7 @@ function Saturn({
   motion,
 }: Pick<SceneCanvasProps, "onSelect" | "motion">) {
   const [surface, rings] = useTexture(
-    ["/textures/saturn.jpg", "/textures/saturn-ring.png"],
+    [assetPath("/textures/saturn.jpg"), assetPath("/textures/saturn-ring.png")],
     (textures) => {
       for (const texture of textures) {
         texture.colorSpace = SRGBColorSpace;

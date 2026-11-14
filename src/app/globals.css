@@ -829,17 +829,17 @@ h1 {
 .guide-moon.titan {
   width: 70px;
   height: 70px;
-  background-image: url("/textures/titan.jpg");
+  background-image: url("/aether-universe/textures/titan.jpg");
 }
 .guide-moon.enceladus {
   width: 39px;
   height: 39px;
-  background-image: url("/textures/enceladus.jpg");
+  background-image: url("/aether-universe/textures/enceladus.jpg");
 }
 .guide-moon.rhea {
   width: 53px;
   height: 53px;
-  background-image: url("/textures/rhea.jpg");
+  background-image: url("/aether-universe/textures/rhea.jpg");
 }
 .mission-illustration {
   color: #b7a183;
@@ -1488,7 +1488,7 @@ h1 {
   width: 130px;
   height: 118px;
   border-radius: 50%;
-  background: url("/textures/saturn.jpg") center/auto 100%;
+  background: url("/aether-universe/textures/saturn.jpg") center/auto 100%;
   box-shadow: inset -50px -15px 45px #000e;
   position: relative;
   transform: rotate(-18deg);

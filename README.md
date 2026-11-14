@@ -9,12 +9,12 @@ Requires Node.js **22.12+** (Node 24 LTS recommended) and npm.
 ```bash
 git clone https://github.com/Seb-Simpson/aether-universe.git
 cd aether-universe
-git checkout codex/aether-001-foundation
+git checkout codex/aether-001b-pages
 npm ci
 npm run dev
 ```
 
-Open **http://localhost:3000**. No API keys, accounts, database, or environment variables are required. Textures and fonts are bundled locally; the experience makes no third-party runtime asset requests. Source links open external NASA and attribution pages only when clicked.
+Open **http://localhost:3000/aether-universe/**. No API keys, accounts, database, or environment variables are required. Textures and fonts are bundled locally; the experience makes no third-party runtime asset requests. Source links open external NASA and attribution pages only when clicked.
 
 To run the production build:
 
@@ -76,8 +76,8 @@ Tests are intentionally behavioural; screenshots require human visual review. Cu
 
 ## Performance & deployment
 
-The page shell and field guide are statically generated. The Three.js runtime loads only on the client. The canvas renders on demand, uses capped DPR (1–1.75), one 1024² shadow map, modest sphere geometry, and no postprocessing. Optional motion invalidates frames only while the document is visible; when paused the scene settles to idle. Geometry and cached texture allocations remain stable across body selection. Component-owned geometry and event listeners are cleaned up on unmount; loader-cached shared maps live for the canvas session.
+The application is statically exported for GitHub Pages at `/aether-universe/`. See [Pages setup and deployment](docs/PAGES.md). The page shell and field guide are statically generated. The Three.js runtime loads only on the client. The canvas renders on demand, uses capped DPR (1–1.75), one 1024² shadow map, modest sphere geometry, and no postprocessing. Optional motion invalidates frames only while the document is visible; when paused the scene settles to idle. Geometry and cached texture allocations remain stable across body selection. Component-owned geometry and event listeners are cleaned up on unmount; loader-cached shared maps live for the canvas session.
 
-A standard Node-compatible Next.js host can run `npm run build && npm run start`. This repository does not deploy or configure a hosting provider. WebGL 2 is required for 3D; HTML content works without it. Real-device GPU/thermal performance and Safari/Firefox are not certified by the included Chromium run. There is no analytics or persistent user data.
+`npm run build` produces `out/`; `npm run start` serves those exported files locally. The Pages workflow deploys pushes to `main` under the user’s subsequent publishing authorization. WebGL 2 is required for 3D; HTML content works without it. Real-device GPU/thermal performance and Safari/Firefox are not certified by the included Chromium run. There is no analytics or persistent user data.
 
 Future destinations should use the same data/scene/state boundaries. Only Saturn's system is available in this release; there are no simulated destination links or unfinished account features.

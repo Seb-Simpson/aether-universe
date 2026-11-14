@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { existsSync } from "node:fs";
 import path from "node:path";
+import { BASE_PATH } from "@/lib/paths";
 import { bodies, bodyOrder } from "./bodies";
 
 describe("editorial astronomy data integrity", () => {
@@ -22,10 +23,18 @@ describe("editorial astronomy data integrity", () => {
   });
   it("bundles every referenced surface texture locally", () => {
     for (const body of Object.values(bodies)) {
-      expect(body.texture).toMatch(/^\/textures\/[a-z-]+\.jpg$/);
-      expect(existsSync(path.join(process.cwd(), "public", body.texture))).toBe(
-        true,
+      expect(body.texture).toMatch(
+        /^\/aether-universe\/textures\/[a-z-]+\.jpg$/,
       );
+      expect(
+        existsSync(
+          path.join(
+            process.cwd(),
+            "public",
+            body.texture.slice(BASE_PATH.length),
+          ),
+        ),
+      ).toBe(true);
     }
   });
 });
