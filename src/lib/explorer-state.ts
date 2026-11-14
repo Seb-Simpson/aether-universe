@@ -1,5 +1,14 @@
 import type { BodyId } from "@/data/bodies";
-export type CameraAction = "zoom-in" | "zoom-out" | "reset" | "top" | "angle";
+export type CameraAction =
+  | "zoom-in"
+  | "zoom-out"
+  | "reset"
+  | "top"
+  | "angle"
+  | "orbit-left"
+  | "orbit-right"
+  | "orbit-up"
+  | "orbit-down";
 export interface ExplorerState {
   selected: BodyId;
   motion: boolean;
