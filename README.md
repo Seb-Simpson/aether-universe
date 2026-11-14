@@ -68,7 +68,7 @@ npx playwright install --with-deps chromium
 npm run test:e2e
 ```
 
-Playwright starts the production server on port 3000 (run `build` first), or reuses an existing server outside CI. The suite covers selection, sourced panels, zoom/presets/reset, mouse orbit, keyboard activation, navigation, reduced motion, WebGL fallback, console errors, stable renderer allocations, and desktop/mobile layouts. Chromium uses SwiftShader in the test configuration so WebGL works in headless Linux. Screenshots are written to `docs/screenshots/`; failure traces/report go to ignored `test-results/` and `playwright-report/`.
+Playwright starts the static-export server on port 3000 at `/aether-universe/` (run `build` first). Stop any existing server on that port before running tests. Set `AETHER_TEST_URL` to test a public deployment instead. The suite covers selection, sourced panels, zoom/presets/reset, mouse orbit, keyboard activation, navigation, reduced motion, WebGL fallback, console errors, stable renderer allocations, and desktop/mobile layouts. Chromium uses SwiftShader in the test configuration so WebGL works in headless Linux. Screenshots are written to `docs/screenshots/`; failure traces/report go to ignored `test-results/` and `playwright-report/`.
 
 For additional tablet (1024px) and narrow-phone (360px) checks, keep the production server running and run `node scripts/responsive-smoke.mjs` in another terminal. This verifies actual mouse/touch orbit, control reachability, paused image stability and repeated-selection allocations, and writes `docs/qa-metrics.json`.
 

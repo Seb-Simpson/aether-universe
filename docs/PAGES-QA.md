@@ -18,7 +18,13 @@ Static desktop/mobile screenshots: `docs/screenshots/pages-desktop-chromium.png`
 
 The credential could not enable Pages or change deployment environment policies (GitHub API 403). The user enabled Pages with GitHub Actions and then explicitly instructed publishing to main, superseding the initial no-main-change constraint. The workflow deploys main to satisfy the environment's existing main-only rule. A separate publishing commit on main preserves PR #1 as unmerged; the review branch still descends from the requested foundation commit.
 
-Deployment and public browser verification will be recorded after the workflow completes. A local build is not a claim that the site is live.
+Deployment **succeeded** via [Pages run 43626720741](https://github.com/Seb-Simpson/aether-universe/actions/runs/43626720741), build 2m59s / deploy 9s. Published main commit: `93503a12149e23a990336a54e4a68175a11fde4b`, with the exact application tree from review-branch commit `24accf47d1f3c09757c32477b0fb813ee18dcd6e`. Both PRs remain unmerged. The independent Verify AETHER workflow also succeeded.
+
+Verified public URL: **https://seb-simpson.github.io/aether-universe/**. Anonymous HTTPS GET returned 200; the public icon returned 200. All 10 desktop/mobile interaction journeys passed against this public origin. Both additional public browser asset checks passed: scripts, styles, the bundled TTF font and all five texture maps succeed at the repository subpath, with no failed browser requests, HTTP errors or console errors.
+
+An initial public asset probe using Playwright's Node request client could not traverse this environment's network proxy (ENETUNREACH/ECONNREFUSED). Chromium could access the site. The probe now uses browser fetch, matching actual application traffic; both public and local-export asset cases were rerun successfully. This was a test-harness connectivity issue, not a site outage.
+
+Public screenshot captures: `docs/screenshots/pages-public-desktop-chromium.png` and `pages-public-mobile-chromium.png`. Subsequent review-branch evidence/test updates do not alter the published application. No further repository settings are required for the current main-based deployment.
 
 ## Limits
 
