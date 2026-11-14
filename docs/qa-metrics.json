@@ -1,0 +1,253 @@
+[
+  {
+    "name": "tablet",
+    "viewport": {
+      "width": 1024,
+      "height": 768
+    },
+    "readyMs": 3127,
+    "layout": {
+      "viewport": 1024,
+      "scrollWidth": 1024
+    },
+    "controls": [
+      {
+        "name": "Oblique view",
+        "box": {
+          "x": 960,
+          "y": 308,
+          "width": 36,
+          "height": 36
+        },
+        "reachable": true
+      },
+      {
+        "name": "View from above",
+        "box": {
+          "x": 960,
+          "y": 344,
+          "width": 36,
+          "height": 36
+        },
+        "reachable": true
+      },
+      {
+        "name": "Zoom in",
+        "box": {
+          "x": 960,
+          "y": 392,
+          "width": 36,
+          "height": 36
+        },
+        "reachable": true
+      },
+      {
+        "name": "Zoom out",
+        "box": {
+          "x": 960,
+          "y": 428,
+          "width": 36,
+          "height": 36
+        },
+        "reachable": true
+      },
+      {
+        "name": "Reset camera",
+        "box": {
+          "x": 960,
+          "y": 464,
+          "width": 36,
+          "height": 36
+        },
+        "reachable": true
+      },
+      {
+        "name": "Enable slow rotation",
+        "box": {
+          "x": 960,
+          "y": 512,
+          "width": 36,
+          "height": 36
+        },
+        "reachable": true
+      },
+      {
+        "name": "Controls and accessibility",
+        "box": {
+          "x": 960,
+          "y": 560,
+          "width": 36,
+          "height": 36
+        },
+        "reachable": true
+      }
+    ],
+    "touchOrbit": null,
+    "pointerOrbit": {
+      "before": 1.259,
+      "during": 0.891,
+      "after": 0.891,
+      "changed": true,
+      "retainedAfterRelease": true
+    },
+    "directSelections": [
+      {
+        "id": "titan",
+        "x": 1231.9538005535208,
+        "y": 280.3104419808757,
+        "selectedFromMesh": true
+      },
+      {
+        "id": "enceladus",
+        "x": 484.78750471938133,
+        "y": 466.0060569267033,
+        "selectedFromMesh": true
+      },
+      {
+        "id": "rhea",
+        "x": 1341.3655439675904,
+        "y": 619.9008019497682,
+        "selectedFromMesh": true
+      }
+    ],
+    "pausedFramesIdentical": true,
+    "initial": {
+      "engine": "three.js r182",
+      "cameraSettled": "true",
+      "cameraDistance": "12.397",
+      "cameraPolar": "1.259",
+      "selected": "saturn",
+      "renderCalls": "7",
+      "triangles": "22048",
+      "geometries": "6",
+      "textures": "8"
+    },
+    "resourcesAfter": {
+      "engine": "three.js r182",
+      "cameraSettled": "true",
+      "cameraDistance": "12.397",
+      "cameraPolar": "1.259",
+      "selected": "saturn",
+      "renderCalls": "5",
+      "triangles": "16096",
+      "geometries": "6",
+      "textures": "8"
+    },
+    "errors": []
+  },
+  {
+    "name": "narrow-mobile",
+    "viewport": {
+      "width": 360,
+      "height": 800
+    },
+    "readyMs": 2884,
+    "layout": {
+      "viewport": 360,
+      "scrollWidth": 360
+    },
+    "controls": [
+      {
+        "name": "Oblique view",
+        "box": {
+          "x": 47,
+          "y": 402,
+          "width": 40,
+          "height": 40
+        },
+        "reachable": true
+      },
+      {
+        "name": "View from above",
+        "box": {
+          "x": 87,
+          "y": 402,
+          "width": 40,
+          "height": 40
+        },
+        "reachable": true
+      },
+      {
+        "name": "Zoom in",
+        "box": {
+          "x": 132,
+          "y": 402,
+          "width": 40,
+          "height": 40
+        },
+        "reachable": true
+      },
+      {
+        "name": "Zoom out",
+        "box": {
+          "x": 172,
+          "y": 402,
+          "width": 40,
+          "height": 40
+        },
+        "reachable": true
+      },
+      {
+        "name": "Reset camera",
+        "box": {
+          "x": 212,
+          "y": 402,
+          "width": 40,
+          "height": 40
+        },
+        "reachable": true
+      },
+      {
+        "name": "Enable slow rotation",
+        "box": {
+          "x": 257,
+          "y": 402,
+          "width": 40,
+          "height": 40
+        },
+        "reachable": true
+      },
+      {
+        "name": "Controls and accessibility",
+        "box": {
+          "x": 302,
+          "y": 402,
+          "width": 40,
+          "height": 40
+        },
+        "reachable": true
+      }
+    ],
+    "touchOrbit": {
+      "before": 1.259,
+      "after": 0.76,
+      "changed": true
+    },
+    "pointerOrbit": null,
+    "directSelections": [],
+    "pausedFramesIdentical": true,
+    "initial": {
+      "engine": "three.js r182",
+      "cameraSettled": "true",
+      "cameraDistance": "17.866",
+      "cameraPolar": "1.259",
+      "selected": "saturn",
+      "renderCalls": "6",
+      "triangles": "19072",
+      "geometries": "6",
+      "textures": "8"
+    },
+    "resourcesAfter": {
+      "engine": "three.js r182",
+      "cameraSettled": "true",
+      "cameraDistance": "17.867",
+      "cameraPolar": "1.259",
+      "selected": "saturn",
+      "renderCalls": "6",
+      "triangles": "19072",
+      "geometries": "6",
+      "textures": "8"
+    },
+    "errors": []
+  }
+]
