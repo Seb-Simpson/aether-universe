@@ -5,7 +5,7 @@ import type { ComponentRef } from "react";
 import { OrbitControls } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import { MathUtils, PerspectiveCamera, Spherical, Vector3 } from "three";
-import type { BodyId } from "@/data/bodies";
+import type { SaturnBodyId } from "@/lib/scene-config";
 import {
   DEFAULT_CAMERA,
   fitRadiusDistance,
@@ -31,14 +31,15 @@ export type CameraCommand = {
     | "orbit-left"
     | "orbit-right"
     | "orbit-up"
-    | "orbit-down";
+    | "orbit-down"
+    | "approach-region";
   nonce: number;
 };
 export interface CameraStatus {
   limit: "near" | "far" | null;
 }
 export interface CameraRigProps {
-  selected: BodyId;
+  selected: SaturnBodyId;
   command: CameraCommand | null;
   reducedMotion?: boolean;
   inputEnabled?: boolean;
@@ -105,6 +106,9 @@ export function CameraRig({
     (eye: Vector3, target: Vector3) => {
       const orbit = controls.current;
       if (!orbit) return;
+      // This rig can mount after a metre-based lunar frame; never interpolate
+      // that unrelated coordinate system into the Saturn scene.
+      if (!initialized.current) camera.position.set(...DEFAULT_CAMERA);
       // Discard old rotational inertia before a deterministic focus or preset.
       stopMomentum();
       if (cameraClearance(camera.position) < 0)

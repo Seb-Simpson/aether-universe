@@ -96,7 +96,7 @@ test("viewport-first exploration keeps selection and sourced panels on screen", 
     page.getByRole("region", { name: "About Saturn", exact: true }),
   ).not.toBeVisible();
   await page.screenshot({
-    path: `docs/screenshots/002a/after-${info.project.name.startsWith("mobile") ? "mobile" : "desktop"}.png`,
+    path: `docs/screenshots/002b/regression-${info.project.name.startsWith("mobile") ? "mobile" : "desktop"}.png`,
   });
   const resources = () =>
     canvas.evaluate((c) => ({
@@ -119,7 +119,7 @@ test("viewport-first exploration keeps selection and sourced panels on screen", 
   ).toBeVisible();
   await noPageScroll(page);
   await page.screenshot({
-    path: `docs/screenshots/002a/after-panel-${info.project.name}.png`,
+    path: `docs/screenshots/002b/regression-panel-${info.project.name}.png`,
   });
   await page.keyboard.press("Escape");
   await expect(panel).not.toBeVisible();
@@ -169,7 +169,7 @@ test("camera zoom respects visual limits and presets reset accurately", async ({
     -0.001,
   );
   await page.screenshot({
-    path: `docs/screenshots/002a/after-rings-above-${info.project.name}.png`,
+    path: `docs/screenshots/002b/regression-rings-above-${info.project.name}.png`,
   });
   await openViewOptions(page);
   await page.getByRole("button", { name: "Oblique view", exact: true }).click();
@@ -357,7 +357,7 @@ test("reading fallback preserves contextual facts when WebGL is unavailable", as
   ).toBeVisible();
   await noPageScroll(page);
   await page.screenshot({
-    path: `docs/screenshots/002a/after-fallback-${info.project.name}.png`,
+    path: `docs/screenshots/002b/regression-fallback-${info.project.name}.png`,
   });
 });
 

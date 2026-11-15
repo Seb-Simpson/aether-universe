@@ -18,11 +18,16 @@ import {
   BufferAttribute,
   BufferGeometry,
   DoubleSide,
+  DirectionalLight,
   Group,
   PCFSoftShadowMap,
   RingGeometry,
   SRGBColorSpace,
 } from "three";
+import MoonDestination from "@/components/lunar/MoonDestination";
+import type { SurfaceStatus } from "@/lib/lunar/types";
+import type { FlightInput } from "@/lib/lunar/types";
+import type { SaturnBodyId } from "@/lib/scene-config";
 import type { BodyId } from "@/data/bodies";
 import { bodies, bodyOrder } from "@/data/bodies";
 import {
@@ -49,6 +54,9 @@ export interface SceneCanvasProps {
   onError?: () => void;
   inputEnabled?: boolean;
   onCameraStatus?: (status: CameraStatus) => void;
+  mode?: "orbit" | "surface";
+  flightInput?: FlightInput;
+  onSurfaceStatus?: (status: SurfaceStatus) => void;
 }
 
 function Fallback() {
@@ -221,7 +229,7 @@ function Moon({
   id,
   onSelect,
 }: {
-  id: Exclude<BodyId, "saturn">;
+  id: Exclude<SaturnBodyId, "saturn">;
   onSelect: SceneCanvasProps["onSelect"];
 }) {
   const texture = useTexture(bodies[id].texture, (loaded) => {
@@ -249,6 +257,33 @@ function Moon({
   );
 }
 
+/** Three r182 lights do not dispose their own shadow render target. */
+function SaturnSun() {
+  const light = useRef<DirectionalLight>(null);
+  useEffect(() => {
+    const sun = light.current;
+    return () => sun?.shadow.dispose();
+  }, []);
+  return (
+    <directionalLight
+      ref={light}
+      position={[-7, 8, 6]}
+      intensity={3.5}
+      color="#fff3df"
+      castShadow
+      shadow-mapSize={[1024, 1024]}
+      shadow-camera-left={-7}
+      shadow-camera-right={7}
+      shadow-camera-top={7}
+      shadow-camera-bottom={-7}
+      shadow-camera-near={0.5}
+      shadow-camera-far={30}
+      shadow-bias={-0.0005}
+      shadow-normalBias={0.015}
+    />
+  );
+}
+
 function Scene({ onReady, onError, ...props }: SceneCanvasProps) {
   const { gl, invalidate } = useThree();
   useEffect(() => {
@@ -260,34 +295,38 @@ function Scene({ onReady, onError, ...props }: SceneCanvasProps) {
     onReady?.();
     invalidate();
     return () => gl.domElement.removeEventListener("webglcontextlost", lost);
-  }, [gl, invalidate, onReady, onError]);
+  }, [gl, invalidate, onReady, onError, props.selected, props.mode]);
   useEffect(() => {
     invalidate();
   }, [props.motion, invalidate]);
 
+  if (props.selected === "moon")
+    return (
+      <>
+        {props.mode !== "surface" && <Stars />}
+        <MoonDestination
+          command={props.command}
+          mode={props.mode}
+          reducedMotion={props.reducedMotion}
+          inputEnabled={props.inputEnabled}
+          flightInput={props.flightInput}
+          onSurfaceStatus={props.onSurfaceStatus}
+          onCameraStatus={props.onCameraStatus}
+        />
+      </>
+    );
   return (
     <>
       <ambientLight intensity={0.16} color="#b4c4df" />
-      <directionalLight
-        position={[-7, 8, 6]}
-        intensity={3.5}
-        color="#fff3df"
-        castShadow
-        shadow-mapSize={[1024, 1024]}
-        shadow-camera-left={-7}
-        shadow-camera-right={7}
-        shadow-camera-top={7}
-        shadow-camera-bottom={-7}
-        shadow-camera-near={0.5}
-        shadow-camera-far={30}
-        shadow-bias={-0.0005}
-        shadow-normalBias={0.015}
-      />
+      <SaturnSun />
       <Stars />
       <SphereDetailProvider>
         <Saturn onSelect={props.onSelect} motion={props.motion} />
         {bodyOrder
-          .filter((id): id is Exclude<BodyId, "saturn"> => id !== "saturn")
+          .filter(
+            (id): id is Exclude<SaturnBodyId, "saturn"> =>
+              id !== "saturn" && id !== "moon",
+          )
           .map((id) => (
             <Moon key={id} id={id} onSelect={props.onSelect} />
           ))}
@@ -354,7 +393,13 @@ export default function SceneCanvas(props: SceneCanvasProps) {
         <SceneBoundary onError={handleError}>
           <Canvas
             data-testid="saturn-canvas"
-            aria-label="Interactive 3D Saturn system. Drag to orbit, scroll or pinch to zoom. Use the object cards and camera buttons for keyboard access."
+            aria-label={
+              props.selected === "moon"
+                ? props.mode === "surface"
+                  ? "Interactive lunar terrain. Drag to look, use flight controls or W A S D to move, Q and E to descend and ascend."
+                  : "Interactive 3D Moon. Drag to orbit, scroll or pinch to zoom. Approach Aristarchus to explore terrain."
+                : "Interactive 3D Saturn system. Drag to orbit, scroll or pinch to zoom. Use the object cards and camera buttons for keyboard access."
+            }
             role="img"
             shadows
             dpr={[1, 1.75]}

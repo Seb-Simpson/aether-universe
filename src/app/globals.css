@@ -1005,3 +1005,151 @@ h1 {
     transform: none;
   }
 }
+.lunar-region-controls {
+  position: absolute;
+  left: max(28px, env(safe-area-inset-left));
+  top: max(94px, calc(env(safe-area-inset-top) + 74px));
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 260px;
+  pointer-events: none;
+}
+.lunar-region-controls strong {
+  font-size: 17px;
+  font-weight: 450;
+  letter-spacing: -0.025em;
+}
+.lunar-region-controls small {
+  font-size: 9px;
+  color: var(--muted);
+}
+.region-action {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  background: #d5bb91;
+  color: #10161d;
+  border: 1px solid #d5bb9170;
+  border-radius: 6px;
+  min-height: 42px;
+  padding: 10px 13px;
+  font-size: 11px;
+  margin-top: 8px;
+}
+.flight-status {
+  max-width: 260px;
+  color: #b3c5d0;
+  font-size: 10px;
+  line-height: 1.8;
+}
+.flight-controls {
+  position: absolute;
+  right: max(28px, env(safe-area-inset-right));
+  bottom: max(115px, calc(env(safe-area-inset-bottom) + 100px));
+  display: grid;
+  grid-template-columns: repeat(3, 58px);
+  gap: 5px;
+  z-index: 3;
+}
+.flight-controls button {
+  touch-action: none;
+  user-select: none;
+  background: #0c151ce8;
+  border: 1px solid #d5bb9140;
+  border-radius: 7px;
+  min-height: 50px;
+  font-size: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.flight-controls button:active {
+  background: #d5bb9150;
+}
+.flight-controls button span {
+  font-size: 7px;
+  color: #a7b7c3;
+}
+.retry-scene {
+  position: absolute;
+  top: 63%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 22px;
+  border: 1px solid #d5bb9170;
+  border-radius: 5px;
+  background: #16202d;
+  color: #d5bb91;
+}
+.surface-active .view-menu {
+  display: none;
+}
+.surface-active .camera-controls {
+  top: 180px;
+  bottom: auto;
+  transform: none;
+}
+@media (max-width: 640px) {
+  .lunar-region-controls {
+    top: 125px;
+    left: 20px;
+    max-width: 230px;
+  }
+  .lunar-region-controls strong {
+    font-size: 15px;
+  }
+  .lunar-region-controls small {
+    font-size: 8px;
+  }
+  .region-action {
+    min-height: 44px;
+    margin-top: 5px;
+  }
+  .flight-controls {
+    right: 16px;
+    bottom: max(115px, calc(env(safe-area-inset-bottom) + 104px));
+    grid-template-columns: repeat(3, 47px);
+    gap: 4px;
+  }
+  .flight-controls button {
+    min-height: 48px;
+  }
+  .surface-active .camera-controls {
+    top: 300px;
+  }
+  .surface-active .subject-hud {
+    bottom: max(116px, calc(env(safe-area-inset-bottom) + 102px));
+  }
+  .surface-active .navigation-note {
+    font-size: 5px;
+  }
+  .object-option {
+    font-size: 9px;
+    padding-left: 2px;
+    padding-right: 2px;
+  }
+}
+@media (max-height: 550px) {
+  .lunar-region-controls {
+    top: 70px;
+    max-width: 220px;
+  }
+  .lunar-region-controls small {
+    display: none;
+  }
+  .flight-controls {
+    bottom: 90px;
+    grid-template-columns: repeat(3, 45px);
+  }
+  .flight-controls button {
+    min-height: 40px;
+  }
+  .surface-active .camera-controls {
+    top: 65px;
+    right: 230px;
+  }
+}

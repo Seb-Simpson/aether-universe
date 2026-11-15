@@ -1,0 +1,660 @@
+[
+  {
+    "name": "tablet",
+    "url": "http://127.0.0.1:3000/aether-universe/",
+    "readyAndSettledMs": 1865,
+    "layout": {
+      "width": 1024,
+      "height": 768,
+      "scrollWidth": 1024,
+      "scrollHeight": 768,
+      "scrollX": 0,
+      "scrollY": 0,
+      "canvasBounds": {
+        "x": 0,
+        "y": 0,
+        "width": 1024,
+        "height": 768,
+        "top": 0,
+        "right": 1024,
+        "bottom": 768,
+        "left": 0
+      }
+    },
+    "controls": [
+      {
+        "name": "Select Saturn",
+        "box": {
+          "x": 279,
+          "y": 693,
+          "width": 95,
+          "height": 47
+        },
+        "reachable": true
+      },
+      {
+        "name": "Select Titan",
+        "box": {
+          "x": 377,
+          "y": 693,
+          "width": 83,
+          "height": 47
+        },
+        "reachable": true
+      },
+      {
+        "name": "Select Enceladus",
+        "box": {
+          "x": 463,
+          "y": 693,
+          "width": 109,
+          "height": 47
+        },
+        "reachable": true
+      },
+      {
+        "name": "Select Rhea",
+        "box": {
+          "x": 575,
+          "y": 693,
+          "width": 81,
+          "height": 47
+        },
+        "reachable": true
+      },
+      {
+        "name": "Select Moon",
+        "box": {
+          "x": 659,
+          "y": 693,
+          "width": 86,
+          "height": 47
+        },
+        "reachable": true
+      },
+      {
+        "name": "About Saturn",
+        "box": {
+          "x": 131.90625,
+          "y": 598,
+          "width": 96,
+          "height": 44
+        },
+        "reachable": true
+      },
+      {
+        "name": "Zoom in",
+        "box": {
+          "x": 952,
+          "y": 317.5,
+          "width": 38,
+          "height": 38
+        },
+        "reachable": true
+      },
+      {
+        "name": "Zoom out",
+        "box": {
+          "x": 952,
+          "y": 361.5,
+          "width": 38,
+          "height": 38
+        },
+        "reachable": true
+      },
+      {
+        "name": "Reset camera",
+        "box": {
+          "x": 952,
+          "y": 412.5,
+          "width": 38,
+          "height": 38
+        },
+        "reachable": true
+      },
+      {
+        "name": "View options",
+        "box": {
+          "x": 898,
+          "y": 86,
+          "width": 98,
+          "height": 38
+        },
+        "reachable": true
+      },
+      {
+        "name": "Controls and accessibility",
+        "box": {
+          "x": 952,
+          "y": 24,
+          "width": 44,
+          "height": 44
+        },
+        "reachable": true
+      }
+    ],
+    "initial": {
+      "engine": "three.js r182",
+      "lodSaturn": "high",
+      "lodTitan": "medium",
+      "lodEnceladus": "low",
+      "lodRhea": "medium",
+      "cameraSettled": "true",
+      "cameraTransition": "false",
+      "cameraDistance": "12.3968",
+      "cameraPolar": "1.2592",
+      "cameraMin": "6.7755",
+      "cameraMax": "40.0000",
+      "cameraClearance": "8.11547",
+      "cameraLimit": "",
+      "cameraMode": "orbit",
+      "cameraFocusError": "0.00000",
+      "selected": "saturn",
+      "renderCalls": "7",
+      "triangles": "19792",
+      "geometries": "5",
+      "textures": "8",
+      "frame": "2"
+    },
+    "final": {
+      "engine": "three.js r182",
+      "lodSaturn": "high",
+      "lodTitan": "medium",
+      "lodEnceladus": "low",
+      "lodRhea": "medium",
+      "cameraSettled": "true",
+      "cameraTransition": "false",
+      "cameraDistance": "12.3968",
+      "cameraPolar": "1.2592",
+      "cameraMin": "6.7755",
+      "cameraMax": "40.0000",
+      "cameraClearance": "8.11547",
+      "cameraLimit": "",
+      "cameraMode": "orbit",
+      "cameraFocusError": "0.00000",
+      "selected": "saturn",
+      "renderCalls": "7",
+      "triangles": "19792",
+      "geometries": "5",
+      "textures": "8",
+      "frame": "27"
+    },
+    "pausedFramesIdentical": true,
+    "idleFrames": {
+      "before": "2",
+      "after": "2"
+    },
+    "geometrySamples": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "textureSamples": [
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8
+    ],
+    "lodSamples": [
+      {
+        "body": "Titan",
+        "tier": "high",
+        "triangles": "13120",
+        "clearance": "3.00331",
+        "distance": "3.8248",
+        "min": "3.2414",
+        "max": "9.8000"
+      },
+      {
+        "body": "Enceladus",
+        "tier": "high",
+        "triangles": "13120",
+        "clearance": "0.68440",
+        "distance": "0.8894",
+        "min": "0.7537",
+        "max": "4.4800"
+      },
+      {
+        "body": "Rhea",
+        "tier": "high",
+        "triangles": "13120",
+        "clearance": "1.00351",
+        "distance": "1.2785",
+        "min": "1.0835",
+        "max": "6.4400"
+      },
+      {
+        "body": "Saturn",
+        "tier": "high",
+        "triangles": "19792",
+        "clearance": "8.11547",
+        "distance": "12.3968",
+        "min": "6.7755",
+        "max": "40.0000"
+      },
+      {
+        "body": "Titan",
+        "tier": "high",
+        "triangles": "13120",
+        "clearance": "3.00331",
+        "distance": "3.8248",
+        "min": "3.2414",
+        "max": "9.8000"
+      },
+      {
+        "body": "Enceladus",
+        "tier": "high",
+        "triangles": "13120",
+        "clearance": "0.68440",
+        "distance": "0.8894",
+        "min": "0.7537",
+        "max": "4.4800"
+      },
+      {
+        "body": "Rhea",
+        "tier": "high",
+        "triangles": "13120",
+        "clearance": "1.00351",
+        "distance": "1.2785",
+        "min": "1.0835",
+        "max": "6.4400"
+      },
+      {
+        "body": "Saturn",
+        "tier": "high",
+        "triangles": "19792",
+        "clearance": "8.11547",
+        "distance": "12.3968",
+        "min": "6.7755",
+        "max": "40.0000"
+      },
+      {
+        "body": "Titan",
+        "tier": "high",
+        "triangles": "13120",
+        "clearance": "3.00331",
+        "distance": "3.8248",
+        "min": "3.2414",
+        "max": "9.8000"
+      },
+      {
+        "body": "Enceladus",
+        "tier": "high",
+        "triangles": "13120",
+        "clearance": "0.68440",
+        "distance": "0.8894",
+        "min": "0.7537",
+        "max": "4.4800"
+      },
+      {
+        "body": "Rhea",
+        "tier": "high",
+        "triangles": "13120",
+        "clearance": "1.00351",
+        "distance": "1.2785",
+        "min": "1.0835",
+        "max": "6.4400"
+      },
+      {
+        "body": "Saturn",
+        "tier": "high",
+        "triangles": "19792",
+        "clearance": "8.11547",
+        "distance": "12.3968",
+        "min": "6.7755",
+        "max": "40.0000"
+      }
+    ],
+    "panelScroll": {
+      "height": 768,
+      "scrollY": 0
+    },
+    "errors": []
+  },
+  {
+    "name": "narrow",
+    "url": "http://127.0.0.1:3000/aether-universe/",
+    "readyAndSettledMs": 1689,
+    "layout": {
+      "width": 360,
+      "height": 800,
+      "scrollWidth": 360,
+      "scrollHeight": 800,
+      "scrollX": 0,
+      "scrollY": 0,
+      "canvasBounds": {
+        "x": 0,
+        "y": 0,
+        "width": 360,
+        "height": 800,
+        "top": 0,
+        "right": 360,
+        "bottom": 800,
+        "left": 0
+      }
+    },
+    "controls": [
+      {
+        "name": "Select Saturn",
+        "box": {
+          "x": 19,
+          "y": 717,
+          "width": 62.796875,
+          "height": 61
+        },
+        "reachable": true
+      },
+      {
+        "name": "Select Titan",
+        "box": {
+          "x": 83.796875,
+          "y": 717,
+          "width": 62.8125,
+          "height": 61
+        },
+        "reachable": true
+      },
+      {
+        "name": "Select Enceladus",
+        "box": {
+          "x": 148.609375,
+          "y": 717,
+          "width": 62.796875,
+          "height": 61
+        },
+        "reachable": true
+      },
+      {
+        "name": "Select Rhea",
+        "box": {
+          "x": 213.40625,
+          "y": 717,
+          "width": 62.796875,
+          "height": 61
+        },
+        "reachable": true
+      },
+      {
+        "name": "Select Moon",
+        "box": {
+          "x": 278.203125,
+          "y": 717,
+          "width": 62.796875,
+          "height": 61
+        },
+        "reachable": true
+      },
+      {
+        "name": "About Saturn",
+        "box": {
+          "x": 106.25,
+          "y": 624,
+          "width": 37,
+          "height": 44
+        },
+        "reachable": true
+      },
+      {
+        "name": "Zoom in",
+        "box": {
+          "x": 298,
+          "y": 465,
+          "width": 42,
+          "height": 42
+        },
+        "reachable": true
+      },
+      {
+        "name": "Zoom out",
+        "box": {
+          "x": 298,
+          "y": 510,
+          "width": 42,
+          "height": 42
+        },
+        "reachable": true
+      },
+      {
+        "name": "Reset camera",
+        "box": {
+          "x": 298,
+          "y": 559,
+          "width": 42,
+          "height": 42
+        },
+        "reachable": true
+      },
+      {
+        "name": "View options",
+        "box": {
+          "x": 258,
+          "y": 75,
+          "width": 86,
+          "height": 36
+        },
+        "reachable": true
+      },
+      {
+        "name": "Controls and accessibility",
+        "box": {
+          "x": 300,
+          "y": 16,
+          "width": 44,
+          "height": 44
+        },
+        "reachable": true
+      }
+    ],
+    "initial": {
+      "engine": "three.js r182",
+      "lodSaturn": "medium",
+      "lodTitan": "low",
+      "lodEnceladus": "low",
+      "lodRhea": "low",
+      "cameraSettled": "true",
+      "cameraTransition": "false",
+      "cameraDistance": "32.2211",
+      "cameraPolar": "1.2592",
+      "cameraMin": "7.0337",
+      "cameraMax": "70.8865",
+      "cameraClearance": "27.83263",
+      "cameraLimit": "",
+      "cameraMode": "orbit",
+      "cameraFocusError": "0.00000",
+      "selected": "saturn",
+      "renderCalls": "6",
+      "triangles": "5440",
+      "geometries": "4",
+      "textures": "8",
+      "frame": "2"
+    },
+    "final": {
+      "engine": "three.js r182",
+      "lodSaturn": "medium",
+      "lodTitan": "low",
+      "lodEnceladus": "low",
+      "lodRhea": "low",
+      "cameraSettled": "true",
+      "cameraTransition": "false",
+      "cameraDistance": "32.2211",
+      "cameraPolar": "1.2592",
+      "cameraMin": "7.0337",
+      "cameraMax": "70.8865",
+      "cameraClearance": "27.83263",
+      "cameraLimit": "",
+      "cameraMode": "orbit",
+      "cameraFocusError": "0.00000",
+      "selected": "saturn",
+      "renderCalls": "6",
+      "triangles": "5440",
+      "geometries": "5",
+      "textures": "8",
+      "frame": "28"
+    },
+    "pausedFramesIdentical": true,
+    "idleFrames": {
+      "before": "2",
+      "after": "2"
+    },
+    "geometrySamples": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "textureSamples": [
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8
+    ],
+    "lodSamples": [
+      {
+        "body": "Titan",
+        "tier": "high",
+        "triangles": "12096",
+        "clearance": "3.04734",
+        "distance": "3.9824",
+        "min": "3.3749",
+        "max": "10.1246"
+      },
+      {
+        "body": "Enceladus",
+        "tier": "high",
+        "triangles": "12096",
+        "clearance": "1.13136",
+        "distance": "1.3364",
+        "min": "0.7837",
+        "max": "4.4800"
+      },
+      {
+        "body": "Rhea",
+        "tier": "high",
+        "triangles": "13120",
+        "clearance": "1.64602",
+        "distance": "1.9210",
+        "min": "1.1266",
+        "max": "6.4400"
+      },
+      {
+        "body": "Saturn",
+        "tier": "medium",
+        "triangles": "5440",
+        "clearance": "27.83263",
+        "distance": "32.2211",
+        "min": "7.0337",
+        "max": "70.8865"
+      },
+      {
+        "body": "Titan",
+        "tier": "high",
+        "triangles": "12096",
+        "clearance": "3.04734",
+        "distance": "3.9824",
+        "min": "3.3749",
+        "max": "10.1246"
+      },
+      {
+        "body": "Enceladus",
+        "tier": "high",
+        "triangles": "12096",
+        "clearance": "1.13136",
+        "distance": "1.3364",
+        "min": "0.7837",
+        "max": "4.4800"
+      },
+      {
+        "body": "Rhea",
+        "tier": "high",
+        "triangles": "13120",
+        "clearance": "1.64602",
+        "distance": "1.9210",
+        "min": "1.1266",
+        "max": "6.4400"
+      },
+      {
+        "body": "Saturn",
+        "tier": "medium",
+        "triangles": "5440",
+        "clearance": "27.83263",
+        "distance": "32.2211",
+        "min": "7.0337",
+        "max": "70.8865"
+      },
+      {
+        "body": "Titan",
+        "tier": "high",
+        "triangles": "12096",
+        "clearance": "3.04734",
+        "distance": "3.9824",
+        "min": "3.3749",
+        "max": "10.1246"
+      },
+      {
+        "body": "Enceladus",
+        "tier": "high",
+        "triangles": "12096",
+        "clearance": "1.13136",
+        "distance": "1.3364",
+        "min": "0.7837",
+        "max": "4.4800"
+      },
+      {
+        "body": "Rhea",
+        "tier": "high",
+        "triangles": "13120",
+        "clearance": "1.64602",
+        "distance": "1.9210",
+        "min": "1.1266",
+        "max": "6.4400"
+      },
+      {
+        "body": "Saturn",
+        "tier": "medium",
+        "triangles": "5440",
+        "clearance": "27.83263",
+        "distance": "32.2211",
+        "min": "7.0337",
+        "max": "70.8865"
+      }
+    ],
+    "panelScroll": {
+      "height": 800,
+      "scrollY": 0
+    },
+    "errors": []
+  }
+]

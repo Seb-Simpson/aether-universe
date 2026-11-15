@@ -1,5 +1,5 @@
 import { Vector3, type PerspectiveCamera } from "three";
-import type { BodyId } from "@/data/bodies";
+import type { SaturnBodyId } from "./scene-config";
 import {
   sceneBodies,
   RING_OUTER_RADIUS,
@@ -123,7 +123,7 @@ export function cameraSegmentIsClear(start: Point, end: Point): boolean {
 }
 
 export function cameraBounds(
-  id: BodyId,
+  id: SaturnBodyId,
   fov: number,
   aspect: number,
   height: number,

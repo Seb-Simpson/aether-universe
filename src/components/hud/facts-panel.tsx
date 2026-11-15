@@ -65,8 +65,9 @@ export function FactsPanel({
         ))}
       </div>
       <p className="scale-note">
-        Illustrative sizes and distances. Fixed moon positions. These are
-        reference facts, not live telemetry.
+        {body.id === "moon"
+          ? "Aristarchus surface mode uses measured SLDEM2015 elevations over a bounded 60 km region. Source detail is approximately 60–100 m; no metre-scale terrain accuracy is implied."
+          : "Illustrative sizes and distances. Fixed moon positions. These are reference facts, not live telemetry."}
       </p>
     </aside>
   );

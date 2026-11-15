@@ -2,7 +2,7 @@ import { assetPath } from "@/lib/paths";
 /** Editorial astronomy data. Rounded values retain their source's precision.
  * Scene dimensions and positions deliberately live outside this module.
  */
-export type BodyId = "saturn" | "titan" | "enceladus" | "rhea";
+export type BodyId = "saturn" | "titan" | "enceladus" | "rhea" | "moon";
 
 export interface Fact {
   label: string;
@@ -26,6 +26,7 @@ export interface CelestialBody {
   facts: readonly Fact[];
   sources: readonly Source[];
   texture: string;
+  thumbnail?: string;
   accent: string;
 }
 
@@ -34,6 +35,7 @@ export const bodyOrder: readonly BodyId[] = [
   "titan",
   "enceladus",
   "rhea",
+  "moon",
 ];
 
 export const bodies: Record<BodyId, CelestialBody> = {
@@ -201,5 +203,60 @@ export const bodies: Record<BodyId, CelestialBody> = {
     ],
     texture: assetPath("/textures/rhea.jpg"),
     accent: "#c9c6be",
+  },
+  moon: {
+    id: "moon",
+    name: "Moon",
+    type: "Earth’s natural satellite",
+    subtitle: "A real world beneath you.",
+    description:
+      "Earth’s Moon preserves a landscape of impact craters, volcanic plains and ancient highlands. Explore the measured relief of the Aristarchus region using lunar elevation observations.",
+    facts: [
+      {
+        label: "Mean radius · approximate",
+        value: "1,740 km",
+        source: "nasa-moon",
+      },
+      {
+        label: "Distance from Earth · average",
+        value: "384,400 km",
+        source: "nasa-moon",
+      },
+      {
+        label: "Orbital period · approximate",
+        value: "27 Earth days",
+        source: "nasa-moon",
+      },
+      {
+        label: "Surface gravity",
+        value: "About 1/6 of Earth’s",
+        source: "nasa-moon",
+      },
+      {
+        label: "Atmosphere",
+        value: "Very thin exosphere",
+        source: "nasa-moon",
+      },
+    ],
+    sources: [
+      {
+        id: "nasa-moon",
+        title: "NASA Science · Moon facts",
+        url: "https://science.nasa.gov/moon/facts/",
+      },
+      {
+        id: "sldem",
+        title: "NASA/GSFC · SLDEM2015 elevation",
+        url: "https://pgda.gsfc.nasa.gov/products/54",
+      },
+      {
+        id: "lroc-wac",
+        title: "LROC · WAC morphology imagery",
+        url: "https://data.lroc.im-ldi.com/lroc/view_rdr/WAC_GLOBAL/",
+      },
+    ],
+    texture: assetPath("/lunar/moon.jpg"),
+    thumbnail: assetPath("/lunar/moon-thumb.jpg"),
+    accent: "#c8ced1",
   },
 };

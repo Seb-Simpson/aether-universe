@@ -8,3 +8,7 @@ next-env.d.ts
 playwright-report/
 test-results/
 .DS_Store
+
+# Offline lunar preprocessing caches
+__pycache__/
+*.pyc

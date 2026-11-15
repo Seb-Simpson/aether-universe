@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "id": "aristarchus",
+  "name": "Aristarchus crater",
+  "centerLat": 23.7,
+  "centerLon": 312.5,
+  "sizeMeters": 60000.0,
+  "radiusMeters": 1737400.0,
+  "gridSize": 1025,
+  "maxLevel": 4,
+  "tileGridSize": 65,
+  "minElevation": -3309.511474609375,
+  "maxElevation": 519.2298583984375,
+  "referenceElevation": -1072.5098876953125,
+  "elevationOffset": 0,
+  "heightUrl": "heights.bin",
+  "tileTemplate": "tiles/{level}/{x}/{y}.bin",
+  "textureTemplate": "tiles/{level}/{x}/{y}.jpg",
+  "regionTextureUrl": "region.jpg",
+  "sourceResolutionMeters": 59.2252938,
+  "effectiveResolutionMeters": [
+    60,
+    100
+  ],
+  "gridSpacingMeters": 58.59375,
+  "imageryResolutionMeters": 100,
+  "bounds": {
+    "north": 24.68933658650424,
+    "south": 22.71066341349576,
+    "west": 311.41954023927525,
+    "east": 313.58045976072475
+  },
+  "projection": "local simple cylindrical, x east / z south; longitude scaled by cos(center latitude)",
+  "coordinateFrame": "Mean Earth / Polar Axis of DE421; planetocentric latitude, east-positive longitude",
+  "verticalDatum": "Height in metres relative to sphere radius 1737400 m; no geoid correction",
+  "verticalExaggeration": 1,
+  "noDataCount": 0,
+  "sources": [
+    {
+      "id": "sldem2015",
+      "product": "SLDEM2015_512_00N_30N_270_315_FLOAT",
+      "data": "https://imbrium.mit.edu/DATA/SLDEM2015/TILES/FLOAT_IMG/SLDEM2015_512_00N_30N_270_315_FLOAT.IMG",
+      "label": "https://imbrium.mit.edu/DATA/SLDEM2015/TILES/FLOAT_IMG/SLDEM2015_512_00N_30N_270_315_FLOAT.LBL",
+      "overview": "https://pgda.gsfc.nasa.gov/products/54",
+      "citation": "Barker et al. (2016), Icarus 273, 346\u2013355, doi:10.1016/j.icarus.2015.07.039",
+      "credit": "NASA/GSFC/MIT LOLA team and JAXA/SELENE Terrain Camera team",
+      "rangeBytes": [
+        250490880,
+        344033279
+      ],
+      "rangeSha256": "88ca3c4bca146dfb8e64877b8fcda7dfd23f4b0b370c967b21010ff270c3902b"
+    },
+    {
+      "id": "lroc-wac",
+      "product": "WAC_GLOBAL_E300N3150_100M v1.3",
+      "data": "https://pds.lroc.im-ldi.com/data/LRO-L-LROC-5-RDR-V1.0/LROLRC_2001/DATA/BDR/WAC_GLOBAL/WAC_GLOBAL_E300N3150_100M.IMG",
+      "overview": "https://data.lroc.im-ldi.com/lroc/view_rdr/WAC_GLOBAL/",
+      "credit": "NASA/GSFC/Arizona State University LROC team",
+      "rangeBytes": [
+        1168600620,
+        1234754003
+      ],
+      "rangeSha256": "525198af18694914bc82ec806602cfd819de4432c476f2d76fac63c65e424e8e",
+      "note": "643nm morphologic mosaic, includes source illumination/shadows; georegistered by planetocentric east-positive PDS pixel centres. Display contrast stretched, not an elevation source."
+    }
+  ],
+  "heightSha256": "bd68852f9523d50817eda7928d237d60d34fef26c5c0d90a92b5d26ed940bda0",
+  "lodSpacingMeters": [
+    937.5,
+    468.75,
+    234.375,
+    117.1875,
+    58.59375
+  ],
+  "globeTextureUrl": "moon.jpg"
+}

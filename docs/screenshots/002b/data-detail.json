@@ -1,0 +1,40 @@
+{
+  "meaning": "Measured source relief omitted by each coarser triangular mesh, compared at the same canonical locations. This is LOD approximation error, not source-data accuracy. Whole-region sample counts are not resident runtime counts.",
+  "levels": [
+    {
+      "level": 0,
+      "spacingMeters": 937.5,
+      "nestedSamplesAcrossWholeRegion": 4225,
+      "rmsHeightDifferenceMeters": 25.4174,
+      "maxAbsoluteHeightDifferenceMeters": 294.2858
+    },
+    {
+      "level": 1,
+      "spacingMeters": 468.75,
+      "nestedSamplesAcrossWholeRegion": 16641,
+      "rmsHeightDifferenceMeters": 11.6203,
+      "maxAbsoluteHeightDifferenceMeters": 160.8862
+    },
+    {
+      "level": 2,
+      "spacingMeters": 234.375,
+      "nestedSamplesAcrossWholeRegion": 66049,
+      "rmsHeightDifferenceMeters": 5.1844,
+      "maxAbsoluteHeightDifferenceMeters": 164.6815
+    },
+    {
+      "level": 3,
+      "spacingMeters": 117.1875,
+      "nestedSamplesAcrossWholeRegion": 263169,
+      "rmsHeightDifferenceMeters": 2.1709,
+      "maxAbsoluteHeightDifferenceMeters": 153.5106
+    },
+    {
+      "level": 4,
+      "spacingMeters": 58.59375,
+      "nestedSamplesAcrossWholeRegion": 1050625,
+      "rmsHeightDifferenceMeters": 0.0,
+      "maxAbsoluteHeightDifferenceMeters": 0.0
+    }
+  ]
+}
