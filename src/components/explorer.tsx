@@ -1,5 +1,7 @@
 "use client";
 import dynamic from "next/dynamic";
+import { FlightControls } from "./hud/flight-controls";
+import type { SurfaceStatus } from "@/lib/lunar/types";
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import { bodies, bodyOrder, type BodyId } from "@/data/bodies";
 import {
@@ -24,6 +26,16 @@ const SceneCanvas = dynamic(() => import("./scene/SceneCanvas"), {
 });
 export function Explorer() {
   const [state, dispatch] = useReducer(explorerReducer, initialState);
+  const [mode, setMode] = useState<"orbit" | "surface">("orbit");
+  const [approached, setApproached] = useState(false);
+  const [surface, setSurface] = useState<SurfaceStatus | null>(null);
+  const [flight, setFlight] = useState({ forward: 0, right: 0, up: 0 });
+  const [sceneEpoch, setSceneEpoch] = useState(0);
+  const selectedRef = useRef<BodyId>("saturn");
+  const onSurfaceStatus = useCallback(
+    (status: SurfaceStatus) => setSurface(status),
+    [],
+  );
   const [panel, setPanel] = useState(false);
   const [modal, setModal] = useState<"about" | "help" | null>(null);
   const [view, setView] = useState(false);
@@ -43,6 +55,12 @@ export function Explorer() {
     [],
   );
   const select = useCallback((id: BodyId) => {
+    setMode("orbit");
+    setApproached(false);
+    setSurface(null);
+    setFlight({ forward: 0, right: 0, up: 0 });
+    if (id !== selectedRef.current) setReady(false);
+    selectedRef.current = id;
     dispatch({ type: "select", id });
     setHint(false);
   }, []);
@@ -82,7 +100,7 @@ export function Explorer() {
         !event.altKey &&
         !event.ctrlKey &&
         !event.metaKey &&
-        /^[1-4]$/.test(event.key)
+        /^[1-5]$/.test(event.key)
       ) {
         event.preventDefault();
         select(bodyOrder[Number(event.key) - 1]);
@@ -107,7 +125,7 @@ export function Explorer() {
   return (
     <main
       id="explorer"
-      className="observatory"
+      className={`observatory ${mode === "surface" ? "surface-active" : ""}`}
       aria-label="Aether interactive observatory"
     >
       <a className="skip-link" href="#scene-navigation">
@@ -128,13 +146,17 @@ export function Explorer() {
             ArrowUp: "orbit-up",
             ArrowDown: "orbit-down",
           };
-          if (!failed && keys[event.key]) {
+          if (!failed && mode === "orbit" && keys[event.key]) {
             event.preventDefault();
             camera(keys[event.key]);
           }
         }}
       >
         <SceneCanvas
+          key={sceneEpoch}
+          mode={mode}
+          flightInput={flight}
+          onSurfaceStatus={onSurfaceStatus}
           selected={state.selected}
           onSelect={select}
           motion={state.motion && !reducedMotion && !modal}
@@ -160,7 +182,11 @@ export function Explorer() {
           <span>AETHER</span>
           <span className="brand-dot" />
         </button>
-        <span className="system-location">SOL / SATURN SYSTEM</span>
+        <span className="system-location">
+          {state.selected === "moon"
+            ? "SOL / EARTH—MOON"
+            : "SOL / SATURN SYSTEM"}
+        </span>
         <div className="header-actions pointer-events-auto">
           <Control
             name="info"
@@ -210,19 +236,21 @@ export function Explorer() {
               <Icon name="orbit" size={16} />
               Oblique view
             </button>
-            <button
-              disabled={failed || reducedMotion}
-              aria-label={
-                state.motion ? "Pause rotation" : "Enable slow rotation"
-              }
-              aria-pressed={state.motion}
-              onClick={() =>
-                dispatch({ type: "motion", enabled: !state.motion })
-              }
-            >
-              <Icon name={state.motion ? "pause" : "play"} size={16} />
-              {state.motion ? "Pause rotation" : "Slow rotation"}
-            </button>
+            {state.selected !== "moon" && (
+              <button
+                disabled={failed || reducedMotion}
+                aria-label={
+                  state.motion ? "Pause rotation" : "Enable slow rotation"
+                }
+                aria-pressed={state.motion}
+                onClick={() =>
+                  dispatch({ type: "motion", enabled: !state.motion })
+                }
+              >
+                <Icon name={state.motion ? "pause" : "play"} size={16} />
+                {state.motion ? "Pause rotation" : "Slow rotation"}
+              </button>
+            )}
             {reducedMotion && <p>Reduced motion is enabled.</p>}
           </div>
         )}
@@ -232,7 +260,11 @@ export function Explorer() {
         aria-label="Selected object"
       >
         <span className="subject-index">
-          {state.selected === "saturn" ? "06 / PLANET" : "SATURN / MOON"}
+          {state.selected === "moon"
+            ? "EARTH / NATURAL SATELLITE"
+            : state.selected === "saturn"
+              ? "06 / PLANET"
+              : "SATURN / MOON"}
         </span>
         <div className="subject-title">
           <h1>{body.name}</h1>
@@ -278,20 +310,94 @@ export function Explorer() {
           onClick={() => camera("reset")}
         />
       </div>
+      {state.selected === "moon" && !failed && (
+        <div className="lunar-region-controls">
+          <span className="eyebrow">
+            {mode === "surface"
+              ? "LOCAL TERRAIN / SLDEM2015"
+              : "LUNAR EXPLORATION REGION"}
+          </span>
+          <strong>Aristarchus crater</strong>
+          <small>23.7°N · 47.5°W · 60 km study area</small>
+          {mode === "orbit" ? (
+            <button
+              className="region-action"
+              aria-label={approached ? "Explore surface" : "Approach region"}
+              onClick={() => {
+                if (approached) {
+                  setMode("surface");
+                  setSurface(null);
+                  setPanel(false);
+                  setView(false);
+                } else {
+                  camera("approach-region");
+                  setApproached(true);
+                }
+              }}
+            >
+              {approached ? "Explore surface" : "Approach region"}
+              <Icon name="arrow" size={16} />
+            </button>
+          ) : (
+            <>
+              <button
+                className="region-action"
+                onClick={() => {
+                  setMode("orbit");
+                  setApproached(false);
+                  setFlight({ forward: 0, right: 0, up: 0 });
+                  camera("reset");
+                }}
+              >
+                Return to orbit
+                <Icon name="orbit" size={16} />
+              </button>
+              <p className="flight-status" aria-live="polite">
+                {surface?.error ??
+                  (!surface?.ready
+                    ? "Loading measured terrain…"
+                    : `${Math.round(surface.altitude).toLocaleString()} m above terrain · L${surface.level} · ${surface.loading ? "Streaming" : "Ready"}`)}
+              </p>
+            </>
+          )}
+        </div>
+      )}
+      {mode === "surface" && !failed && <FlightControls onInput={setFlight} />}
+      {failed && (
+        <button
+          className="retry-scene"
+          onClick={() => {
+            setFailed(false);
+            setReady(false);
+            setSceneEpoch((value) => value + 1);
+            setSurface(null);
+            setFlight({ forward: 0, right: 0, up: 0 });
+            camera("reset");
+            setMode("orbit");
+            setApproached(false);
+          }}
+        >
+          Retry 3D
+        </button>
+      )}
       <div className="navigation-note" aria-live="polite">
         {failed
           ? "READING MODE"
-          : limit === "near"
-            ? "AVAILABLE DETAIL LIMIT"
-            : limit === "far"
-              ? "OVERVIEW LIMIT"
-              : ready
-                ? "ORBITAL VIEW"
-                : "PREPARING 3D"}
+          : mode === "surface"
+            ? "SURFACE FLIGHT / METRES"
+            : state.selected === "moon"
+              ? "LUNAR ORBIT"
+              : limit === "near"
+                ? "AVAILABLE DETAIL LIMIT"
+                : limit === "far"
+                  ? "OVERVIEW LIMIT"
+                  : ready
+                    ? "ORBITAL VIEW"
+                    : "PREPARING 3D"}
         <span />
         ILLUSTRATIVE SCALE
       </div>
-      {hint && ready && !failed && !panel && (
+      {hint && ready && !failed && !panel && mode === "orbit" && (
         <p className="gesture-hint">
           Drag to orbit <span>·</span> Scroll or pinch to zoom
         </p>

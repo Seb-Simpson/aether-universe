@@ -7,7 +7,7 @@ export function ObjectDock({
   onSelect: (id: BodyId) => void;
 }) {
   return (
-    <nav className="object-dock" aria-label="Saturn system objects">
+    <nav className="object-dock" aria-label="Exploration destinations">
       {bodyOrder.map((id, index) => (
         <button
           key={id}
@@ -19,7 +19,9 @@ export function ObjectDock({
           <span
             className={`object-mini mini-${id}`}
             aria-hidden="true"
-            style={{ backgroundImage: `url(${bodies[id].texture})` }}
+            style={{
+              backgroundImage: `url(${bodies[id].thumbnail ?? bodies[id].texture})`,
+            }}
           />
           <span>{bodies[id].name}</span>
           <kbd aria-hidden="true">{index + 1}</kbd>

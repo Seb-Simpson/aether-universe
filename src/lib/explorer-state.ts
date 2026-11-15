@@ -8,7 +8,8 @@ export type CameraAction =
   | "orbit-left"
   | "orbit-right"
   | "orbit-up"
-  | "orbit-down";
+  | "orbit-down"
+  | "approach-region";
 export interface ExplorerState {
   selected: BodyId;
   motion: boolean;

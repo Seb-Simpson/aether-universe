@@ -62,7 +62,7 @@ try {
         .toJSON(),
     }));
     await page.screenshot({
-      path: `docs/screenshots/002a/after-${config.name}.png`,
+      path: `docs/screenshots/002b/regression-${config.name}.png`,
     });
     const frameBefore = await canvas.screenshot();
     const frameCountBefore = await canvas.getAttribute("data-frame");
@@ -75,6 +75,7 @@ try {
       "Select Titan",
       "Select Enceladus",
       "Select Rhea",
+      "Select Moon",
       "About Saturn",
       "Zoom in",
       "Zoom out",
@@ -245,7 +246,7 @@ try {
   await browser.close();
 }
 writeFileSync(
-  "docs/screenshots/002a/after-metrics.json",
+  "docs/screenshots/002b/regression-metrics.json",
   JSON.stringify(results, null, 2) + "\n",
 );
 console.log(

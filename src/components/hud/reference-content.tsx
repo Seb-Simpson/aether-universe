@@ -5,21 +5,45 @@ export function AboutContent() {
     <>
       <p className="modal-lead">A small observatory for a very big universe.</p>
       <p>
-        Explore Saturn, Titan, Enceladus and Rhea. The scene is an artistic
-        composition with exaggerated moon sizes and spacing, fixed positions,
-        and illustrative lighting. Optional rotation is for viewing, not a
-        real-time clock.
+        Explore Saturn, Titan, Enceladus, Rhea and Earth’s Moon. The Saturn
+        composition has exaggerated moon sizes/spacing and fixed positions; it
+        is not an ephemeris. Earth’s Moon uses a separate reference frame with
+        correct spherical proportions.
       </p>
-      <h3>What you can see</h3>
+      <h3>Real lunar terrain</h3>
       <p>
-        Saturn’s oblateness and major ring divisions are represented. Colour
-        maps have finite resolution; zoom stops before surface navigation.
-        Titan’s map shows its haze, not an unobscured surface. There is no
-        terrain elevation or landing system in this release.
+        Aristarchus is a bounded 60 km region at 23.7°N, 47.5°W. SLDEM2015
+        measured elevations drive the mesh without vertical exaggeration;
+        effective source detail is roughly 60–100 m. LROC WAC imagery is 100
+        m-class and includes source illumination. It is not metre-detail ground
+        photography.
+      </p>
+      <p>
+        Progressively finer tiles add real geometric and image samples as you
+        descend. Flight collision samples the same elevation grid and respects
+        coarse fallback geometry. Outside the study area a reference sphere
+        supplies distant context, not measured terrain. There is no walking
+        mode.
       </p>
       <h3>Sources & credits</h3>
       <p>
-        Saturn and rings:{" "}
+        Lunar heights:{" "}
+        <a
+          href="https://pgda.gsfc.nasa.gov/products/54"
+          target="_blank"
+          rel="noreferrer"
+        >
+          SLDEM2015 — NASA/GSFC/MIT and JAXA/SELENE
+        </a>
+        . Regional imagery:{" "}
+        <a
+          href="https://data.lroc.im-ldi.com/lroc/view_rdr/WAC_GLOBAL/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          NASA/GSFC/ASU LROC WAC
+        </a>
+        . Globe, Saturn and rings:{" "}
         <a
           href="https://www.solarsystemscope.com/textures/"
           target="_blank"
@@ -35,7 +59,7 @@ export function AboutContent() {
         >
           CC BY 4.0
         </a>
-        . Moon maps: NASA/JPL-Caltech via{" "}
+        . Saturn-moon maps: NASA/JPL-Caltech through{" "}
         <a
           href="https://github.com/nasa/NASA-3D-Resources"
           target="_blank"
@@ -43,7 +67,7 @@ export function AboutContent() {
         >
           NASA 3D Resources
         </a>
-        . Manrope font by Mikhail Sharanda and contributors, SIL OFL.
+        . Manrope: Mikhail Sharanda and contributors, SIL OFL.
       </p>
       <ul className="modal-sources">
         {bodyOrder.map((id) => (
@@ -59,10 +83,6 @@ export function AboutContent() {
           </li>
         ))}
       </ul>
-      <p className="scale-note">
-        No account, paid API or live location data. More destinations can join
-        this observatory in future releases.
-      </p>
     </>
   );
 }
@@ -74,50 +94,52 @@ export function HelpContent() {
         <div>
           <dt>Orbit</dt>
           <dd>
-            Drag the scene with a mouse or one finger. Focus the scene with Tab
-            and use the arrow keys to orbit.
+            Drag with a mouse or one finger. Focus the scene with Tab and use
+            arrow keys to orbit. Scroll or pinch to zoom; + / − are
+            alternatives.
           </dd>
         </div>
         <div>
-          <dt>Zoom</dt>
+          <dt>Moon</dt>
           <dd>
-            Scroll, pinch with two fingers, or use + / −. Zoom stops at the
-            available-detail limit; these maps do not support surface travel.
+            Select Moon, choose Approach region, then Explore surface to fly
+            over Aristarchus. Return to orbit restores the globe.
+          </dd>
+        </div>
+        <div>
+          <dt>Flight</dt>
+          <dd>
+            Drag to look. W/A/S/D or arrows move horizontally, E/Q ascend or
+            descend. Hold the flight-pad buttons on mobile. Pinch, scroll or + /
+            − to approach or rise. The available study area is bounded.
           </dd>
         </div>
         <div>
           <dt>Focus</dt>
           <dd>
-            Select a body in the dock or directly in 3D. Reset camera returns to
-            a framed view of that body.
-          </dd>
-        </div>
-        <div>
-          <dt>Perspective</dt>
-          <dd>
-            View options contains overhead and oblique presets and optional slow
-            rotation.
+            Select any destination in the dock, or press 1–5 outside dialogs.
+            Reset restores the selected object or high regional view.
           </dd>
         </div>
         <div>
           <dt>Keyboard</dt>
           <dd>
-            Tab moves through controls. Enter or Space activates them. Escape
-            closes panels, menus and dialogs. Keys 1–4 select bodies outside
-            dialogs.
+            Tab moves through controls; Enter or Space activates them. Escape
+            closes optional information, menus and dialogs.
           </dd>
         </div>
         <div>
           <dt>Motion</dt>
           <dd>
             Rotation starts off. Reduced motion disables optional rotation and
-            camera easing. Menus stay still while you read.
+            easing; manual flight remains under your control. Help pauses camera
+            input.
           </dd>
         </div>
       </dl>
       <p className="scale-note">
-        If WebGL is unavailable, object facts and references remain accessible.
-        Only optional panels scroll; the explorer stays in the viewport.
+        If WebGL is lost, facts remain accessible. Retry 3D recreates the scene.
+        Only optional panels scroll.
       </p>
     </>
   );

@@ -6,6 +6,7 @@ export const surfaceMapWidths: Record<BodyId, number> = {
   titan: 720,
   enceladus: 1440,
   rhea: 1440,
+  moon: 8192,
 };
 
 export type SphereDetail = "low" | "medium" | "high";

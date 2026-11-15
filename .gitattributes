@@ -1,0 +1,2 @@
+# Preserve original PDS labels verbatim, including producer CRLF and whitespace.
+public/lunar/*.lbl -text -whitespace

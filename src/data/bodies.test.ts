@@ -6,7 +6,7 @@ import { bodies, bodyOrder } from "./bodies";
 
 describe("editorial astronomy data integrity", () => {
   it("has one unique record for every selectable subject", () => {
-    expect(new Set(bodyOrder).size).toBe(4);
+    expect(new Set(bodyOrder).size).toBe(5);
     expect(Object.keys(bodies).sort()).toEqual([...bodyOrder].sort());
     for (const id of bodyOrder) expect(bodies[id].id).toBe(id);
   });
@@ -24,7 +24,7 @@ describe("editorial astronomy data integrity", () => {
   it("bundles every referenced surface texture locally", () => {
     for (const body of Object.values(bodies)) {
       expect(body.texture).toMatch(
-        /^\/aether-universe\/textures\/[a-z-]+\.jpg$/,
+        /^\/aether-universe\/(?:textures|lunar)\/[a-z-]+\.jpg$/,
       );
       expect(
         existsSync(

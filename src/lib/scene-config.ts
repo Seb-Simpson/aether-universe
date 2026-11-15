@@ -1,8 +1,10 @@
 import type { BodyId } from "@/data/bodies";
 
+export type SaturnBodyId = Exclude<BodyId, "moon">;
+
 /** Art-directed view coordinates, deliberately not physical orbit distances. */
 export const sceneBodies: Record<
-  BodyId,
+  SaturnBodyId,
   { position: [number, number, number]; radius: number }
 > = {
   saturn: { position: [0, 0, 0], radius: 2 },

@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { Vector3 } from "three";
 import { sceneBodies, DEFAULT_CAMERA } from "./scene-config";
-import { bodyOrder } from "@/data/bodies";
+import type { SaturnBodyId } from "./scene-config";
+const bodyOrder = Object.keys(sceneBodies) as SaturnBodyId[];
 import {
   cameraBounds,
   cameraClearance,
